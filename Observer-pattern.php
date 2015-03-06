@@ -6,21 +6,22 @@
  *
  * 在php SPL中已经提供SplSubject和SplOberver接口
  */
-interface SplSubject {
-
-    function attach(SplObserver $observer);
-
-    function detach(SplObserver $observer);
-
-    function notify();
-}
-
-
-interface SqlObserver {
-
-    function update(SplSubject $subject);
-}
-
+/*
+ * interface SplSubject {
+ *
+ * function attach(SplObserver $observer);
+ *
+ * function detach(SplObserver $observer);
+ *
+ * function notify();
+ * }
+ *
+ *
+ * interface SqlObserver {
+ *
+ * function update(SplSubject $subject);
+ * }
+ */
 
 /**
  * 观察者模式
@@ -31,7 +32,8 @@ interface SqlObserver {
  */
 class Subject implements SplSubject {
     private $observers;
-
+    
+    // 接收观察者对象
     public function attach(SplObserver $observer)
     {
         if (! in_array($observer, $this->observers))
@@ -39,7 +41,8 @@ class Subject implements SplSubject {
             $this->observers[] = $observer;
         }
     }
-
+    
+    // 剔除观察者对象
     public function detach(SplObserver $observer)
     {
         if (false != ($index = array_search($observer, $this->observers)))
@@ -53,20 +56,24 @@ class Subject implements SplSubject {
         // post相关code
         $this->notify();
     }
-
-    private function notify()
+    
+    // 通知被观察者
+    public function notify()
     {
         foreach ( $this->observers as $observer )
         {
+            // 调用子类的统一方法
             $observer->update($this);
         }
     }
-
+    
+    // 被观察者调用的方法1
     public function setCount($count)
     {
         echo "数据量加" . $count;
     }
-
+    
+    // 被观察者调用的方法2
     public function setIntegral($integral)
     {
         echo "积分量加" . $integral;
@@ -76,30 +83,23 @@ class Subject implements SplSubject {
 
 class Observer1 implements SplObserver {
 
-    public function update($subject)
+    public function update(SplSubject $SplSubject)
     {
-        $subject->setCount(1);
+        $SplSubject->setCount(1);
     }
 }
 
 
 class Observer2 implements SplObserver {
 
-    public function update($subject)
+    public function update(SplSubject $SplSubject)
     {
-        $subject->setIntegral(10);
+        $SplSubject->setIntegral(10);
     }
 }
 
 
-class Client {
-
-    public function test()
-    {
-        $subject = new Subject();
-        $subject->attach(new Observer1());
-        $subject->attach(new Observer2());
-        $subject->post(); // 输出：数据量加1 积分量加10
-    }
-}
-
+$subject = new Subject();
+$subject->attach(new Observer1());
+$subject->attach(new Observer2());
+$subject->post(); // 输出：数据量加1 积分量加10
