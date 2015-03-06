@@ -81,6 +81,7 @@ class Subject implements SplSubject {
 }
 
 
+// 被观察者
 class Observer1 implements SplObserver {
 
     public function update(SplSubject $SplSubject)
@@ -89,7 +90,7 @@ class Observer1 implements SplObserver {
     }
 }
 
-
+// 被观察者
 class Observer2 implements SplObserver {
 
     public function update(SplSubject $SplSubject)
