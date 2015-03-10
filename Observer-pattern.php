@@ -100,6 +100,7 @@ class Observer2 implements SplObserver {
 }
 
 
+//  测试内容
 $subject = new Subject();
 $subject->attach(new Observer1());
 $subject->attach(new Observer2());
