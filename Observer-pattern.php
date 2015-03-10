@@ -80,7 +80,7 @@ class Subject implements SplSubject {
     }
 }
 
-
+// 被观察者
 class Observer1 implements SplObserver {
 
     public function update(SplSubject $SplSubject)
@@ -89,7 +89,7 @@ class Observer1 implements SplObserver {
     }
 }
 
-
+// 被观察者
 class Observer2 implements SplObserver {
 
     public function update(SplSubject $SplSubject)
@@ -99,6 +99,7 @@ class Observer2 implements SplObserver {
 }
 
 
+//  测试内容
 $subject = new Subject();
 $subject->attach(new Observer1());
 $subject->attach(new Observer2());
