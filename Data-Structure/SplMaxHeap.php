@@ -11,5 +11,5 @@ $obj->insert(1);
 $obj->insert(0);
 
 foreach ($obj as $number) {
-    echo $number."\n";
+    echo $number . "\n";
 }

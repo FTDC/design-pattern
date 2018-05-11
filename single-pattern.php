@@ -3,39 +3,46 @@
 
 /**
  * 设计模式之单例模式
- * 
- * @abstract $_instance必须声明为静态的私有变量  构造函数和析构函数必须声明为私有,防止外部程序new类从而失去单例模式的意义
+ *
+ * @abstract $_instance 必须声明为静态的私有变量  构造函数和析构函数必须声明为私有,防止外部程序new类从而失去单例模式的意义
  * getInstance()方法必须设置为公有的,必须调用此方法以返回实例的一个引用 ::操作符只能访问静态变量和静态函数
  * new对象都会消耗内存
  * 使用场景:最常用的地方是数据库连接。
  * 使用单例模式生成一个对象后，该对象可以被其它众多对象所使用。
- * 
+ *
+ *
+ * 使用场景：
+ * ● 要求生成唯一序列号的环境；
+ * ● 在整个项目中需要一个共享访问点或共享数据，例如一个Web页面上的计数器，可以不用把每次刷新都记录到数据库中，使用单例模式保持计数器的值，并确保是线程安全的；
+ * ● 创建一个对象需要消耗的资源过多，如要访问IO和数据库等资源；
+ * ● 需要定义大量的静态常量和静态方法（如工具类）的环境，可以采用单例模式（当然，也可以直接声明为static的方式）。
+ *
  * @author xjin
  * @version 20150305
  */
 
-class Single {
-    
+class Single
+{
+
     // 保存类实例的静态成员变量
     private static $_instance;
-    
+
     // private标记的构造方法
     private function __construct()
     {
         echo 'This is a Constructed method;';
     }
-    
+
     // 创建__clone方法防止对象被复制克隆
     public function __clone()
     {
         trigger_error('Clone is not allow!', E_USER_ERROR);
     }
-    
+
     // 单例方法,用于访问实例的公共的静态方法
     public static function getInstance()
     {
-        if (! (self::$_instance instanceof self))
-        {
+        if (!(self::$_instance instanceof self)) {
             self::$_instance = new self();
         }
         return self::$_instance;
@@ -55,4 +62,4 @@ $single = Single::getInstance();
 $single->test();
 
 // 复制(克隆)对象将导致一个E_USER_ERROR
-$single_clone = clone $single;
+//$single_clone = clone $single;

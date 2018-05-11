@@ -48,13 +48,14 @@ function middleware($handlers, $arguments = [])
 $abc = function () {
     echo "this is abc start \n";
     yield;
+    sleep(2);
     echo "this is abc end \n";
 };
 
 $qwe = function () {
     echo "this is qwe start \n";
     $a = yield;
-    echo $a."\n";
+    echo $a . "\n";
     echo "this is qwe end \n";
 };
 $one = function () {
